@@ -1,0 +1,84 @@
+{% extends "website/base.html" %}
+
+{% block title %}Article Detail{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            {% if article.image %}
+            <img src="{{ article.image.url }}" class="card-img-top mt-3" alt="Article Image">
+            {% endif %}
+            <div class="card-body">
+                <h4 class="card-title"> {{ article.title }}</h4> 
+                <i class="fa fa-eye"></i>{{ view_count }} 
+                
+                
+                    <i class="fa fa-folder"></i>{{ article.category }}
+                
+
+                
+                <p class="card-text">{{ article.content }}</p>
+            </div>
+            <div class="card-footer bg-light">
+                <div class="row">
+
+
+                    <div class="col-md-4">
+                        <i class="fa fa-user"></i>{{ article.author }}
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <i class="fa fa-tags"></i> Tags:
+                        {% for tag in article.tags.all %}
+                            <span class="badge badge-primary">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Related News Section -->
+<div class="row mt-3">
+    <div class="col-md-8 offset-md-2">
+        <div class="related-news">
+            <h3>Related News</h3>
+            <ul>
+                {% for related_article in related_news %}
+                    <li><a href="{{ related_article.get_absolute_url }}">{{ related_article.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Facebook Comment Plugin -->
+<div class="row mt-3">
+    <div class="col-md-8 offset-md-2">
+        <div class="fb-comments" 
+             data-href="{{ request.build_absolute_uri }}" 
+             data-width="100%" 
+             data-numposts="5">
+        </div>
+    </div>
+</div>
+
+<!-- Facebook Like Button Plugin -->
+<div class="row mt-3">
+    <div class="col-md-8 offset-md-2">
+        <div class="fb-like" 
+             data-href="{{ request.build_absolute_uri }}" 
+             data-width="" 
+             data-layout="standard" 
+             data-action="like" 
+             data-size="small" 
+             data-share="true">
+        </div>
+    </div>
+</div>
+
+<!-- Include Facebook SDK -->
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0"></script>
+{% endblock %}
